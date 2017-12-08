@@ -1,24 +1,16 @@
-# the compiler: gcc for C program, define as g++ for C++
 CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -lpthread -c $(DEBUG)
+LFLAGS = -Wall -lpthread $(DEBUG)
 
-# compiler flags:
-#  -g    adds debugging information to the executable file
-#  -Wall turns on most, but not all, compiler warnings
-CFLAGS  = -Wall
+server: server.o utils.o
+	$(CC) $(LFLAGS) server.o utils.o -o server
 
-# the list of header files
-#INCL   = server.h
-#the list of source files
-SRC = server.c
-OBJ = $(SRC:.c=.o)
+server.o: server.c utils.h
+	$(CC) $(CFLAGS) server.c
 
-# the build target executable:
-TARGET = server
-
-$(TARGET): $(OBJ)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJ)
-
-$(OBJ): $(INCL)
+utils.o: utils.h utils.c
+	$(CC) $(CFLAGS) utils.c
 
 clean:
-	$(RM) $(TARGET) $(OBJ)
+	rm -rf *.o *~ server
