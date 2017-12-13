@@ -29,7 +29,8 @@ typedef enum
   TOO_FULL,
   USERNAME_ERROR,
   SUCCESS,
-  ERROR
+  ERROR,
+  PRIVATE_FILE
 
 } message_type;
 
@@ -40,7 +41,7 @@ typedef struct
   message_type type;
   char username[21];
   char data[256];
-
+  char *file_size;
 } message;
 
 //structure to hold client connection information
