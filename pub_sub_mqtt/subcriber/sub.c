@@ -1,12 +1,5 @@
-// Current Assumes
-// QoS 0
-// All messages < 127 bytes
-//
-// ./mqttsub -c <client name> -i <ip address> -p <port> -t <topic> 
-//
-// e.g.
-// ./mqttsub -h 192.168.1.38 -t mbed/fishtank -c MacBook_sub
-//
+// ./sub -c <client name> -i <ip address> -p <port> -t <topic> 
+// ./sub -c client1 -i 127.0.0.1 -p 1883 -t google/gmail
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,32 +7,31 @@
 
 #include "mqtt.h"
 
-const char *client_name = "default_sub"; 	// -c
-const char *ip_addr = "127.0.0.1";		// -h
+const char *client_name = "client_name"; 	// -c
+const char *ip_addr = "127.0.0.1";		// -i
 uint32_t port = 1883;			// -p
 const char *topic = "hello/world";	// -t
 
 void parse_options(int argc, char** argv);
 
 int main(int argc, char** argv) {
-	puts("MQTT SUB Test Code");
+	puts("MQTT SUB Client");
 
 	if (argc > 1) {
 		parse_options(argc, argv);
 	}
 
-//  mqtt_broker_handle_t *broker = mqtt_connect("default_sub","127.0.0.1", 1883);
 	mqtt_broker_handle_t *broker = mqtt_connect(client_name, ip_addr, port);
 
 	if (broker == 0) {
-		puts("Failed to connect");
+		puts("failed to connect");
 		exit(1);
 	}
 
 	int result = mqtt_subscribe(broker, topic, QoS0);
 
 	if (result != 1) {
-		puts("failed to Subscribe");
+		puts("failed to subscribe");
 		exit(1);
 	}
 
