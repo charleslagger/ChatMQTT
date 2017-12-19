@@ -142,19 +142,19 @@ void handle_user_input(connection_info *connection)
 
     if(toUsername == NULL)
     {
-      puts(KRED "The format for private messages is: /m <username> <message>" RESET);
+      puts( "The format for private messages is: /m <username> <message>" );
       return;
     }
 
     if(strlen(toUsername) == 0)
     {
-      puts(KRED "You must enter a username for a private message." RESET);
+      puts( "You must enter a username for a private message." );
       return;
     }
 
     if(strlen(toUsername) > 20)
     {
-      puts(KRED "The username must be between 1 and 20 characters." RESET);
+      puts( "The username must be between 1 and 20 characters." );
       return;
     }
 
@@ -162,7 +162,7 @@ void handle_user_input(connection_info *connection)
 
     if(chatMsg == NULL)
     {
-      puts(KRED "You must enter a message to send to the specified user." RESET);
+      puts( "You must enter a message to send to the specified user." );
       return;
     }
 
@@ -226,11 +226,11 @@ void handle_server_message(connection_info *connection)
   {
 
     case CONNECT:
-      printf(KYEL "%s has connected." RESET "\n", msg.username);
+      printf("%s has connected.\n", msg.username);
     break;
 
     case DISCONNECT:
-      printf(KYEL "%s has disconnected." RESET "\n" , msg.username);
+      printf( "%s has disconnected.\n" , msg.username);
     break;
 
     case GET_USERS:
@@ -242,20 +242,20 @@ void handle_server_message(connection_info *connection)
     break;
 
     case PUBLIC_MESSAGE:
-      printf(KGRN "%s" RESET ": %s\n", msg.username, msg.data);
+      printf( "%s: %s\n", msg.username, msg.data);
     break;
 
     case PRIVATE_MESSAGE:
-      printf(KWHT "From %s:" KCYN " %s\n" RESET, msg.username, msg.data);
+      printf( "From %s: %s\n", msg.username, msg.data);
     break;
 
     case TOO_FULL:
-      fprintf(stderr, KRED "Server chatroom is too full to accept new clients." RESET "\n");
+      fprintf(stderr,  "Server chatroom is too full to accept new clients.\n");
       exit(0);
     break;
 
     default:
-      fprintf(stderr, KRED "Unknown message type received." RESET "\n");
+      fprintf(stderr,  "Unknown message type received.\n");
     break;
   }
 }
